@@ -1,3 +1,68 @@
+##------------------------  here are the steps I did
+# Make sure you're in the right directory first
+cd ./05_src/experiment_tracking/
+
+# Build the MLflow image
+docker compose build
+
+# Start everything
+docker compose up -d
+
+#------------------------  to stop 
+# Just stop (keeps data)
+docker compose stop
+
+# Stop AND delete all data
+docker compose down -v
+#_-------------------------------------------- 
+
+# Why Docker for this course specifically?
+# Your pipeline needs three things running to work:
+# Your Python code
+#    ↓ saves experiments to
+# MLflow ← needs → PostgreSQL (stores metadata)
+                → MinIO (stores model files/artifacts)
+# Without Docker you'd have to:
+
+# Manually install PostgreSQL on your Mac
+# Manually install MinIO
+# Configure them both correctly
+# Hope it matches everyone else's setup
+
+# With Docker — one command and all three services are running identically for everyone in the course.
+
+# Do you have to start/stop every time?
+No! Notice this in the docs:
+the containers are set to always restart
+This means once you've done the initial setup:
+
+Containers automatically restart when Docker Desktop opens
+# Docker Desktop can be set to launch on login on your Mac
+
+# So your typical workflow would just be:
+Turn on Mac → Docker starts automatically → containers start automatically → run your notebooks
+
+# The only times you'd manually intervene:
+SituationCommandFirst time setupdocker compose build then docker compose up -dWant to free up memorydocker compose stopWant to wipe all datadocker compose down -v
+
+# In short: set it up once, forget about it. It just runs in the background like a database server would in production.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Using Docker to Set Up Experiment Tracking
 
 + For our work, we need an environment that closely resembles the production environment. 
@@ -91,3 +156,4 @@ In our course, we will set up the following services:
 
 + Containers and containerization are topics well beyond the scope of this course. However, we will use containerized applications to help us implement certain patterns. 
 + If you are interested in Docker, a good place to start is the [Official Docker Guides](https://docs.docker.com/get-started/overview/).
+
